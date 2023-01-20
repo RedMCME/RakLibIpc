@@ -69,9 +69,10 @@ class UserToRakLibThreadMessageSender implements ServerInterface{
 		$this->channel->write(chr(ITCProtocol::PACKET_SET_PACKETS_PER_TICK_LIMIT) . Binary::writeLong($limit));
 	}
 
-	public function blockAddress(string $address, int $timeout) : void{
+	public function blockAddress(string $address, int $timeout) : bool{
 		$buffer = chr(ITCProtocol::PACKET_BLOCK_ADDRESS) . chr(strlen($address)) . $address . Binary::writeInt($timeout);
 		$this->channel->write($buffer);
+		return true;
 	}
 
 	public function unblockAddress(string $address) : void{
